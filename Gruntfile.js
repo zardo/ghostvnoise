@@ -22,6 +22,13 @@ module.exports = function(grunt) {
                 options: {
                     livereload: true
                 }
+            },
+            js: {
+                files: ['./assets/javascript/*.js'],
+                tasks: ['concat'],
+                options: {
+                    livereload: true
+                }
             }
         },
 
@@ -37,6 +44,20 @@ module.exports = function(grunt) {
                 replacement: 'dm.js',
                 file: 'public/assets/javascript/dm.js',
                 cleanup: true
+            }
+        },
+
+        concat: {
+            options: {
+                separator: ';\n',
+            },
+            js_frontend: {
+                src: [
+                    './bower_components/jquery/dist/jquery.min.js',
+                    './assets/javascript/sidebar.js',
+                    './assets/javascript/Graph.js',
+                ],
+                dest: './assets/javascript/dist/ghostvnoise.js'
             }
         },
 
@@ -56,12 +77,11 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-contrib-imagemin');
     grunt.loadNpmTasks('grunt-cache-busting');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
 
     // Task definition
-    grunt.registerTask('production', ['copy', 'less', 'concat', 'uglify', 'cssmin' ,'cache-busting']);
+    grunt.registerTask('production', ['less', 'concat', 'cssmin']);
     grunt.registerTask('default', ['watch']);
 
 };
